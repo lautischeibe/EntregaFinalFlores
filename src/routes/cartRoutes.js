@@ -13,13 +13,17 @@ router.post('/', async (req, res) => {
 //Obtiene productos del carrito por ID
 router.get('/:cid', async (req, res) => {
   const cart = await cartManager.getCartById(Number(req.params.cid));
-  if (!cart) return res.status(404).json({ message: 'Carrito no encontrado' });
+  if (!cart) return res.status(404).json({
+    message: 'Carrito no encontrado'
+  });
   res.json(cart.products);
 });
 
 router.post('/:cid/product/:pid', async (req, res) => {
   const cart = await cartManager.addProductToCart(Number(req.params.cid), Number(req.params.pid));
-  if (!cart) return res.status(404).json({ message: 'Carrito no encontrado' });
+  if (!cart) return res.status(404).json({
+    message: 'Carrito no encontrado'
+  });
   res.json(cart);
 });
 

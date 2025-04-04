@@ -7,7 +7,10 @@ class CartManager {
 
   async createCart() {
     const carts = await this.getCarts();
-    const newCart = { id: carts.length ? carts[carts.length - 1].id + 1 : 1, products: [] };
+    const newCart = {
+      id: carts.length ? carts[carts.length - 1].id + 1 : 1,
+      products: []
+    };
     carts.push(newCart);
     await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2));
     return newCart;
@@ -36,7 +39,10 @@ class CartManager {
     if (product) {
       product.quantity += 1;
     } else {
-      cart.products.push({ product: pid, quantity: 1 });
+      cart.products.push({
+        product: pid,
+        quantity: 1
+      });
     }
 
     await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2));
