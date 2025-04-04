@@ -1,0 +1,42 @@
+[{
+        "id": 1,
+        "title": "Smartphone",
+        "description": "Smartphone de alta calidad",
+        "code": "SMR001",
+        "price": 800,
+        "status": true,
+        "stock": 20,
+        "category": "Electronics",
+        "thumbnails": [
+            "smartphone1.png",
+            "smartphone2.png"
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Laptop",
+        "description": "Laptop de alta calidad",
+        "code": "LPT001",
+        "price": 180,
+        "status": true,
+        "stock": 25,
+        "category": "Electronics",
+        "thumbnails": [
+            "laptop1.png",
+            "laptop2.png"
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Tablet",
+        "description": "Tablet Gama Media",
+        "code": "T003",
+        "price": 5660,
+        "status": true,
+        "stock": 12,
+        "category": "Electronics",
+        "thumbnails": [
+            "tablet1.png"
+        ]
+    }
+]
