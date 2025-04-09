@@ -19,6 +19,10 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../public")));
 
+app.use('/img', express.static(path.join(__dirname, 'img')));
+
+
+
 // Conectar las rutas existentes
 app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
@@ -54,12 +58,16 @@ io.on("connection", (socket) => {
 });
 
 // Rutas para vistas
-app.get("/", async (req, res) => {
-  const products = await productManager.getProducts();
-  res.render("home", {
-    products,
-  });
+app.get("/", (req, res) => {
+  res.redirect("/products"); // Redirige automáticamente a /products
 });
+
+
+app.get("/products", async (req, res) => {
+  const products = await productManager.getProducts(); // Obtiene los productos desde el JSON o la base de datos
+  res.render("home", { products }); // Renderiza la vista 'home.handlebars' con los productos
+});
+
 
 app.get("/realtimeproducts", async (req, res) => {
   res.render("realTimeProducts");

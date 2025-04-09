@@ -1,46 +1,132 @@
 <h1>Productos en Tiempo Real</h1>
-<ul id="product-list"></ul>
 
-<form id="product-form">
-  <input type="text" id="title" placeholder="Título del producto" required>
-  <input type="number" id="price" placeholder="Precio" required>
-  <button type="submit">Agregar Producto</button>
+<!-- Filtros -->
+<form id="filters-form">
+  <label for="query">Buscar por categoría:</label>
+  <select id="query">
+    <option value="">Categoría</option>
+  </select>
+
+  <label for="sort">Ordenar por precio:</label>
+  <select id="sort">
+    <option value="">Sin ordenamiento</option>
+    <option value="asc">Ascendente</option>
+    <option value="desc">Descendente</option>
+  </select>
+
+  <button type="button" onclick="applyFilters()">Aplicar Filtros</button>
 </form>
 
-<form id="delete-form">
-  <input type="number" id="product-id" placeholder="ID del producto a eliminar" required>
-  <button type="submit">Eliminar Producto</button>
-</form>
+<!-- Lista de productos -->
+<div id="product-list" class="product-grid"></div>
 
-<script src="/socket.io/socket.io.js"></script>
+<!-- Paginación -->
+<nav id="pagination">
+  <button id="prev-page" onclick="changePage(-1)" disabled>Anterior</button>
+  <span id="current-page"></span>
+  <button id="next-page" onclick="changePage(1)" disabled>Siguiente</button>
+</nav>
+
+<!-- Estilos básicos para el diseño -->
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-card h3 {
+    margin: 0 0 8px;
+  }
+
+  .product-card p {
+    margin: 4px 0;
+  }
+
+  .product-card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .product-card button:hover {
+    background: #0056b3;
+  }
+</style>
+
 <script>
-  const socket = io();
+let currentPage = 1;
+let limit = 10;
 
+const loadCategories = async () => {
+  const response = await fetch('/api/products/categories'); // Llama al endpoint del backend
+  const categories = await response.json();
+
+  const querySelect = document.getElementById('query');
+  categories.forEach(category => {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category;
+    querySelect.appendChild(option);
+  });
+};
+
+const applyFilters = async () => {
+  const query = document.getElementById('query').value;
+  const sort = document.getElementById('sort').value;
+
+  const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}&query=${query}&sort=${sort}`);
+  const data = await response.json();
+
+  updateProductList(data.payload);
+  updatePagination(data);
+};
+
+const changePage = async (direction) => {
+  currentPage += direction;
+  applyFilters();
+};
+
+const updateProductList = (products) => {
   const productList = document.getElementById('product-list');
-  const productForm = document.getElementById('product-form');
-  const deleteForm = document.getElementById('delete-form');
-
-  socket.on('updateProducts', (products) => {
-    productList.innerHTML = '';
-    products.forEach(product => {
-      const li = document.createElement('li');
-      li.textContent = `${product.title} - $${product.price}`;
-      productList.appendChild(li);
-    });
+  productList.innerHTML = '';
+  products.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <h3>${product.title}</h3>
+      <p>${product.description}</p>
+      <p><strong>Precio:</strong> $${product.price}</p>
+      <p><strong>Categoría:</strong> ${product.category}</p>
+    `;
+    productList.appendChild(card);
   });
+};
 
-  productForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const title = document.getElementById('title').value;
-    const price = Number(document.getElementById('price').value);
-    socket.emit('newProduct', { title, price });
-    productForm.reset();
-  });
+const updatePagination = ({ page, hasPrevPage, hasNextPage }) => {
+  document.getElementById('current-page').textContent = `Página ${page}`;
+  document.getElementById('prev-page').disabled = !hasPrevPage;
+  document.getElementById('next-page').disabled = !hasNextPage;
+};
 
-  deleteForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const productId = Number(document.getElementById('product-id').value);
-    socket.emit('deleteProduct', productId);
-    deleteForm.reset();
-  });
+loadCategories(); // Carga categorías al inicio
+applyFilters(); // Ejecuta filtros iniciales
+
 </script>

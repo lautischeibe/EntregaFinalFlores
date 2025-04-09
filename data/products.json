@@ -1,57 +1,260 @@
 [
   {
     "id": 1,
-    "title": "Smartphone",
-    "description": "Smartphone de alta calidad",
-    "code": "SMR001",
-    "price": 800,
+    "title": "Gengar",
+    "description": "Pokemon Fantasma",
+    "code": "GEN001",
+    "price": 2000000,
     "status": true,
-    "stock": 20,
-    "category": "Electronics",
-    "thumbnails": [
-      "smartphone1.png",
-      "smartphone2.png"
-    ]
+    "stock": 10,
+    "category": "Fantasma",
+    "thumbnails": ["Gengar.png"]
   },
   {
     "id": 2,
-    "title": "Laptop",
-    "description": "Laptop de alta calidad",
-    "code": "LPT001",
-    "price": 180,
+    "title": "Butterfree",
+    "description": "Pokemon Bicho",
+    "code": "BUT001",
+    "price": 25000,
     "status": true,
     "stock": 25,
-    "category": "Electronics",
+    "category": "Bicho",
     "thumbnails": [
-      "laptop1.png",
-      "laptop2.png"
+      "Butterfree.png"
     ]
   },
   {
     "id": 3,
-    "title": "Tablet",
-    "description": "Tablet Gama Media",
-    "code": "T003",
-    "price": 1200,
+    "title": "Pikachu",
+    "description": "Pokemon Electrico",
+    "code": "PIK001",
+    "price": 55000,
     "status": true,
-    "stock": 50,
-    "category": "Electronics",
+    "stock": 10,
+    "category": "Electrico",
     "thumbnails": [
-      "tablet1.png"
+"Pikachu.png"
     ]
   },
   {
     "id": 4,
-    "title": "LED SMART",
-    "description": "TV LED",
-    "code": "TV001",
-    "price": 15400,
+    "title": "Raichu",
+    "description": "Pokemon Electrico",
+    "code": "RAI001",
+    "price": 80000,
     "status": true,
     "stock": 15,
-    "category": "Electronics",
+    "category": "Electrico",
     "thumbnails": [
-      "tvled1.png",
-      "tvled2.png"
+"Raichu.png"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Bulbasaur",
+    "description": "Pokemon Planta",
+    "code": "BUL001",
+    "price": 50000,
+    "status": true,
+    "stock": 15,
+    "category": "Planta",
+    "thumbnails": [
+"Bulbasaur.png"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Umbreon",
+    "description": "Pokemon Oscuro",
+    "code": "UM001",
+    "price": 80000,
+    "status": true,
+    "stock": 15,
+    "category": "Oscuro",
+    "thumbnails": [
+"Umbreon.png"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Eevee",
+    "description": "Pokemon Normal",
+    "code": "EEV001",
+    "price": 8000,
+    "status": true,
+    "stock": 15,
+    "category": "Normal",
+    "thumbnails": [
+"Eevee.png"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Hitmonlee",
+    "description": "Pokemon Lucha",
+    "code": "HIT001",
+    "price": 75000,
+    "status": true,
+    "stock": 12,
+    "category": "Lucha",
+    "thumbnails": [
+"Hitmonlee.png"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Jynx",
+    "description": "Pokemon Hielo",
+    "code": "JYN001",
+    "price": 67000,
+    "status": true,
+    "stock": 4,
+    "category": "Hielo",
+    "thumbnails": [
+"Jynx.png"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Vulpix",
+    "description": "Pokemon Fuego",
+    "code": "VUL001",
+    "price": 50000,
+    "status": true,
+    "stock": 7,
+    "category": "Fuego",
+    "thumbnails": [
+"Vulpix.png"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Alakazam",
+    "description": "Pokemon Psiquico",
+    "code": "ALA001",
+    "price": 900000,
+    "status": true,
+    "stock": 20,
+    "category": "Psiquico",
+    "thumbnails": [
+"Alakazam.png"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Jigglypuff",
+    "description": "Pokemon Hada",
+    "code": "JIG001",
+    "price": 230000,
+    "status": true,
+    "stock": 5,
+    "category": "Hada",
+    "thumbnails": [
+"Jigglypuff.png"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Squirtle",
+    "description": "Pokemon Agua",
+    "code": "SQU001",
+    "price": 250000,
+    "status": true,
+    "stock": 10,
+    "category": "Agua",
+    "thumbnails": [
+"Squirtle.png"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Charmander",
+    "description": "Pokemon Fuego",
+    "code": "CHAR001",
+    "price": 250000,
+    "status": true,
+    "stock": 15,
+    "category": "Fuego",
+    "thumbnails": [
+"Charmander.png"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Starmie",
+    "description": "Pokemon Agua",
+    "code": "STAR001",
+    "price": 700000,
+    "status": true,
+    "stock": 2,
+    "category": "Agua",
+    "thumbnails": [
+"Starmie.png"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Psyduck",
+    "description": "Pokemon Agua",
+    "code": "PSY001",
+    "price": 1000,
+    "status": true,
+    "stock": 200,
+    "category": "Agua",
+    "thumbnails": [
+"Psyduck.png"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "MewTwo",
+    "description": "Pokemon Psiquico",
+    "code": "MEW001",
+    "price": 10000000,
+    "status": true,
+    "stock": 1,
+    "category": "Psiquico",
+    "thumbnails": [
+"MewTwo.png"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Teddiursa",
+    "description": "Pokemon Normal",
+    "code": "TED001",
+    "price": 7000,
+    "status": true,
+    "stock": 20,
+    "category": "Normal",
+    "thumbnails": [
+"Teddiursa.png"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Chikorita",
+    "description": "Pokemon Planta",
+    "code": "CHI001",
+    "price": 25000,
+    "status": true,
+    "stock": 15,
+    "category": "Planta",
+    "thumbnails": [
+"Chikorita.png"
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Jolteon",
+    "description": "Pokemon Electrico",
+    "code": "JOL001",
+    "price": 570000,
+    "status": true,
+    "stock": 15,
+    "category": "Electrico",
+    "thumbnails": [
+"Jolteon.png"
     ]
   }
 ]
