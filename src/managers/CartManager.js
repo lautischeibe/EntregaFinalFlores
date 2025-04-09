@@ -21,14 +21,12 @@ class CartManager {
   
     return newCart; // Devolver el carrito recién creado
   }
-  
-  
-  
+
 
   async getCarts() {
     try {
       const data = await fs.promises.readFile(this.path, 'utf-8');
-      return JSON.parse(data);
+      return JSON.parse(data); // Leer y parsear el archivo JSON
     } catch (error) {
       if (error.code === 'ENOENT') { // Si el archivo no existe
         console.warn('El archivo carts.json no existe. Creando uno nuevo...');
@@ -51,18 +49,27 @@ class CartManager {
   async addProductToCart(cid, pid, quantity = 1) {
     const carts = await this.getCarts(); // Leer todos los carritos existentes
     const cart = carts.find(cart => cart.id === cid); // Buscar el carrito por ID
-    if (!cart) return null; // Si no se encuentra el carrito, devolver null
+    if (!cart) {
+      console.error(`Carrito con ID ${cid} no encontrado.`);
+      return null; // Si no se encuentra el carrito, devolver null
+    }
+  
+    console.log('Carrito encontrado:', cart); // Log de depuración
   
     // Buscar el producto dentro del carrito
     const product = cart.products.find(p => p.productId === pid);
     if (product) {
       product.quantity += quantity; // Si el producto ya existe, actualizar la cantidad
+      console.log(`Producto actualizado: ${JSON.stringify(product)}`); // Log de depuración
     } else {
-      cart.products.push({ productId: pid, quantity }); // Si no existe, agregar un nuevo producto
+      const newProduct = { productId: pid, quantity };
+      cart.products.push(newProduct); // Si no existe, agregar un nuevo producto
+      console.log(`Producto agregado: ${JSON.stringify(newProduct)}`); // Log de depuración
     }
   
     try {
       await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2)); // Guardar los cambios en el archivo
+      console.log('Carrito actualizado después de agregar producto:', cart); // Log de depuración
     } catch (error) {
       console.error('Error al actualizar el archivo de carritos:', error);
       throw new Error('No se pudo actualizar el carrito.');
@@ -70,7 +77,7 @@ class CartManager {
   
     return cart; // Devolver el carrito actualizado
   }
-  
+
 }
 
 module.exports = CartManager;

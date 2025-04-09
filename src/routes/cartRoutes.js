@@ -6,6 +6,16 @@ const fs = require('fs');
 
 const cartManager = new CartManager('./data/carts.json');
 
+router.get('/', async (req, res) => {
+  try {
+    const carts = await cartManager.getCarts(); // Obtener todos los carritos
+    res.json(carts); // Responder con la lista de carritos
+  } catch (error) {
+    console.error('Error al obtener carritos:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
 // Crea un carrito
 router.post('/', async (req, res) => {
   try {
@@ -122,5 +132,7 @@ router.delete('/:cid/product/:pid', async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
+
+
 
 module.exports = router;

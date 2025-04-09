@@ -1,7 +1,13 @@
 <h1>Tienda Pokémon</h1>
 
 <button onclick="createCart()">Crear nuevo carrito</button>
-<a href="/api/carts/1/view" style="display: block; margin-bottom: 20px;">Ver mi carrito</a>
+<div>
+  <label for="cartSelect">Seleccionar carrito:</label>
+  <select id="cartSelect">
+    <!-- Opciones serán generadas dinámicamente -->
+  </select>
+  <button onclick="loadCart()">Cargar carrito</button>
+</div>
 
 <!-- Formulario de filtrado -->
 <form id="filterForm" style="margin-bottom: 20px;">
@@ -26,13 +32,13 @@
 
 <div id="product-list" class="product-grid">
   <!-- Aquí se renderizan los productos -->
-  {{#each products}}
+  {{#each product}}
   <div class="product-card">
     <img src="/img/{{this.thumbnails.[0]}}" alt="{{this.title}}" class="pokemon-image">
     <h3>{{this.title}}</h3>
     <p>{{this.description}}</p>
     <p><strong>Precio:</strong> ${{this.price}}</p>
-    <button onclick="addToCart(1, {{this.id}})">Agregar al carrito</button>
+    <button onclick="addToCart(null, {{this.productId}})">Agregar al carrito</button>
   </div>
   {{/each}}
 </div>
@@ -42,60 +48,6 @@
   <span id="currentPage">Página 1</span>
   <button id="nextPageBtn" onclick="changePage('next')">Siguiente</button>
 </div>
-
-<!-- Estilo básico -->
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    text-align: center;
-  }
-
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    margin-top: 20px;
-    padding: 10px;
-  }
-
-  .product-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-
-  .pokemon-icon {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 10px;
-  }
-
-  .product-card button {
-    margin-top: 10px;
-    padding: 8px 12px;
-    background: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-
-  .pokemon-image {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 10px;
-  }
-  .product-card button:hover {
-    background: #0056b3;
-  }
-</style>
 
 <script>
 async function filterProducts() {
@@ -136,7 +88,7 @@ function renderProducts(products) {
       <h3>${product.title}</h3>
       <p>${product.description}</p>
       <p><strong>Precio:</strong> $${product.price}</p>
-      <button onclick="addToCart(1, ${product.id})">Agregar al carrito</button>
+      <button onclick="addToCart(1, ${product.productId})">Agregar al carrito</button>
     `;
     productList.appendChild(productCard);
   });
@@ -145,49 +97,63 @@ function renderProducts(products) {
 
 <script>
   async function createCart() {
-    try {
-      const response = await fetch('/api/carts', {
-        method: 'POST' // Usamos POST para crear el carrito
-      });
-
-      if (response.ok) {
-        const newCart = await response.json();
-        alert(`Carrito creado con ID: ${newCart.id}`);
-        location.reload(); // Refrescar la página para mostrar el nuevo carrito
-      } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.message}`);
-      }
-    } catch (error) {
-      console.error('Error al crear el carrito:', error);
-      alert('Hubo un problema al crear el carrito.');
+  try {
+    const response = await fetch('/api/carts', { method: 'POST' }); // Crear el carrito
+    if (response.ok) {
+      const newCart = await response.json(); // Obtener los datos del carrito creado
+      alert(`Carrito creado con ID: ${newCart.id}`);
+      // Redirigir automáticamente a la vista del carrito
+      window.location.href = `/api/carts/${newCart.id}/view`;
+    } else {
+      const errorData = await response.json();
+      alert(`Error: ${errorData.message}`);
     }
+  } catch (error) {
+    console.error('Error al crear el carrito:', error);
+    alert('Hubo un problema al crear el carrito.');
   }
+}
 </script>
 
 
 <script>
-  async function addToCart(cartId, productId) {
-    try {
-      const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ quantity: 1 }) // Cantidad por defecto = 1
-      });
-
-      if (response.ok) {
-        alert("Producto agregado al carrito correctamente.");
-      } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.message}`);
-      }
-    } catch (error) {
-      console.error("Error al agregar producto al carrito:", error);
-      alert("Hubo un problema al agregar el producto al carrito.");
-    }
+async function addToCart(cartId, productId) {
+  // Obtener el carrito seleccionado del menú si no se pasa `cartId`
+  if (!cartId) {
+    const cartSelect = document.getElementById('cartSelect');
+    cartId = cartSelect.value; // Capturar el carrito activo
   }
+
+  // Verificar que ambos IDs sean válidos
+  if (!cartId || !productId) {
+    console.error('cartId o productId son inválidos:', { cartId, productId });
+    alert('Seleccioná un carrito antes de agregar productos.');
+    return; // Detener si los datos son inválidos
+  }
+
+  console.log('Intentando agregar producto al carrito:', { cartId, productId }); // Log para depuración
+
+  try {
+    const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ quantity: 1 }) // Cantidad predeterminada: 1
+    });
+
+    if (response.ok) {
+      alert('Producto agregado correctamente al carrito seleccionado.');
+    } else {
+      const errorData = await response.json();
+      alert(`Error: ${errorData.message}`);
+      console.error('Error en el backend:', errorData);
+    }
+  } catch (error) {
+    console.error('Error al agregar producto al carrito:', error);
+    alert('Hubo un problema al agregar el producto.');
+  }
+}
 </script>
 
 <script>
@@ -250,3 +216,116 @@ function changePage(direction) {
 // Cargar la primera página al abrir la página
 fetchProducts();
 </script>
+
+<script>
+async function loadCarts() {
+  try {
+    const response = await fetch('/api/carts');
+    if (response.ok) {
+      const carts = await response.json();
+      const cartSelect = document.getElementById('cartSelect');
+      cartSelect.innerHTML = ''; // Limpiar las opciones anteriores
+
+      carts.forEach(cart => {
+        const option = document.createElement('option');
+        option.value = cart.id;
+        option.textContent = `Carrito ${cart.id}`;
+        cartSelect.appendChild(option);
+      });
+    } else {
+      console.error('Error al cargar carritos:', await response.json());
+    }
+  } catch (error) {
+    console.error('Error al cargar carritos:', error);
+  }
+}
+
+// Llamar al cargar la página
+document.addEventListener('DOMContentLoaded', loadCarts);
+
+// Llamar a esta función al cargar la página
+document.addEventListener('DOMContentLoaded', loadCarts);
+
+async function loadCart() {
+  const cartSelect = document.getElementById('cartSelect'); // Obtener el menú desplegable
+  const cartId = cartSelect.value; // Obtener el ID del carrito seleccionado
+
+  if (!cartId) {
+    alert('Seleccioná un carrito válido.');
+    return;
+  }
+
+  // Redirigir a la vista del carrito seleccionado
+  window.location.href = `/api/carts/${cartId}/view`;
+}
+
+function renderCartProducts(products) {
+  const productList = document.getElementById('product-list');
+  productList.innerHTML = ''; // Limpiar la lista de productos del carrito
+
+  products.forEach(product => {
+    const productCard = document.createElement('div');
+    productCard.className = 'product-card';
+    productCard.innerHTML = `
+      <h3>Producto ID: ${product.productId}</h3>
+      <p><strong>Cantidad:</strong> ${product.quantity}</p>
+    `;
+    productList.appendChild(productCard);
+  });
+}
+</script>
+
+
+<!-- Estilo básico -->
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    text-align: center;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .pokemon-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+
+  .product-card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+
+  .pokemon-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+  .product-card button:hover {
+    background: #0056b3;
+  }
+</style>

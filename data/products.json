@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "productId": 1,
     "title": "Gengar",
     "description": "Pokemon Fantasma",
     "code": "GEN001",
@@ -11,7 +11,7 @@
     "thumbnails": ["Gengar.png"]
   },
   {
-    "id": 2,
+    "productId": 2,
     "title": "Butterfree",
     "description": "Pokemon Bicho",
     "code": "BUT001",
@@ -24,7 +24,7 @@
     ]
   },
   {
-    "id": 3,
+    "productId": 3,
     "title": "Pikachu",
     "description": "Pokemon Electrico",
     "code": "PIK001",
@@ -37,7 +37,7 @@
     ]
   },
   {
-    "id": 4,
+    "productId": 4,
     "title": "Raichu",
     "description": "Pokemon Electrico",
     "code": "RAI001",
@@ -50,7 +50,7 @@
     ]
   },
   {
-    "id": 5,
+    "productId": 5,
     "title": "Bulbasaur",
     "description": "Pokemon Planta",
     "code": "BUL001",
@@ -63,7 +63,7 @@
     ]
   },
   {
-    "id": 6,
+    "productId": 6,
     "title": "Umbreon",
     "description": "Pokemon Oscuro",
     "code": "UM001",
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "id": 7,
+    "productId": 7,
     "title": "Eevee",
     "description": "Pokemon Normal",
     "code": "EEV001",
@@ -89,7 +89,7 @@
     ]
   },
   {
-    "id": 8,
+    "productId": 8,
     "title": "Hitmonlee",
     "description": "Pokemon Lucha",
     "code": "HIT001",
@@ -102,7 +102,7 @@
     ]
   },
   {
-    "id": 9,
+    "productId": 9,
     "title": "Jynx",
     "description": "Pokemon Hielo",
     "code": "JYN001",
@@ -115,7 +115,7 @@
     ]
   },
   {
-    "id": 10,
+    "productId": 10,
     "title": "Vulpix",
     "description": "Pokemon Fuego",
     "code": "VUL001",
@@ -128,7 +128,7 @@
     ]
   },
   {
-    "id": 11,
+    "productId": 11,
     "title": "Alakazam",
     "description": "Pokemon Psiquico",
     "code": "ALA001",
@@ -141,7 +141,7 @@
     ]
   },
   {
-    "id": 12,
+    "productId": 12,
     "title": "Jigglypuff",
     "description": "Pokemon Hada",
     "code": "JIG001",
@@ -154,7 +154,7 @@
     ]
   },
   {
-    "id": 13,
+    "productId": 13,
     "title": "Squirtle",
     "description": "Pokemon Agua",
     "code": "SQU001",
@@ -167,7 +167,7 @@
     ]
   },
   {
-    "id": 14,
+    "productId": 14,
     "title": "Charmander",
     "description": "Pokemon Fuego",
     "code": "CHAR001",
@@ -180,7 +180,7 @@
     ]
   },
   {
-    "id": 15,
+    "productId": 15,
     "title": "Starmie",
     "description": "Pokemon Agua",
     "code": "STAR001",
@@ -193,7 +193,7 @@
     ]
   },
   {
-    "id": 16,
+    "productId": 16,
     "title": "Psyduck",
     "description": "Pokemon Agua",
     "code": "PSY001",
@@ -206,7 +206,7 @@
     ]
   },
   {
-    "id": 17,
+    "productId": 17,
     "title": "MewTwo",
     "description": "Pokemon Psiquico",
     "code": "MEW001",
@@ -219,7 +219,7 @@
     ]
   },
   {
-    "id": 18,
+    "productId": 18,
     "title": "Teddiursa",
     "description": "Pokemon Normal",
     "code": "TED001",
@@ -232,7 +232,7 @@
     ]
   },
   {
-    "id": 19,
+    "productId": 19,
     "title": "Chikorita",
     "description": "Pokemon Planta",
     "code": "CHI001",
@@ -245,7 +245,7 @@
     ]
   },
   {
-    "id": 20,
+    "productId": 20,
     "title": "Jolteon",
     "description": "Pokemon Electrico",
     "code": "JOL001",
