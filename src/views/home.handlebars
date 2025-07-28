@@ -6,7 +6,7 @@
   <select id="cartSelect">
     <!-- Opciones serán generadas dinámicamente -->
   </select>
-  <button onclick="loadCart()">Cargar carrito</button>
+  <button onclick="loadCarts()">Cargar carrito</button>
 </div>
 
 <!-- Formulario de filtrado -->
@@ -88,7 +88,7 @@ function renderProducts(products) {
       <h3>${product.title}</h3>
       <p>${product.description}</p>
       <p><strong>Precio:</strong> $${product.price}</p>
-      <button onclick="addToCart(1, ${product.productId})">Agregar al carrito</button>
+      <button onclick="addToCart(null, ${product.productId})">Agregar al carrito</button>
     `;
     productList.appendChild(productCard);
   });
@@ -98,7 +98,7 @@ function renderProducts(products) {
 <script>
   async function createCart() {
   try {
-    const response = await fetch('/api/carts', { method: 'POST' }); // Crear el carrito
+    const response = await fetch('/api/carts/', { method: 'POST' }); // Crear el carrito
     if (response.ok) {
       const newCart = await response.json(); // Obtener los datos del carrito creado
       alert(`Carrito creado con ID: ${newCart.id}`);
@@ -118,20 +118,19 @@ function renderProducts(products) {
 
 <script>
 async function addToCart(cartId, productId) {
-  // Obtener el carrito seleccionado del menú si no se pasa `cartId`
   if (!cartId) {
     const cartSelect = document.getElementById('cartSelect');
-    cartId = cartSelect.value; // Capturar el carrito activo
+    cartId = cartSelect?.value; // Capturar el carrito activo
   }
 
   // Verificar que ambos IDs sean válidos
   if (!cartId || !productId) {
     console.error('cartId o productId son inválidos:', { cartId, productId });
     alert('Seleccioná un carrito antes de agregar productos.');
-    return; // Detener si los datos son inválidos
+    return;
   }
 
-  console.log('Intentando agregar producto al carrito:', { cartId, productId }); // Log para depuración
+  console.log('Intentando agregar producto al carrito:', { cartId, productId });
 
   try {
     const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
@@ -154,6 +153,8 @@ async function addToCart(cartId, productId) {
     alert('Hubo un problema al agregar el producto.');
   }
 }
+
+
 </script>
 
 <script>
